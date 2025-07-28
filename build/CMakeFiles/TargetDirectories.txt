@@ -1,0 +1,3 @@
+/workspaces/CppGPUSimulator/build/CMakeFiles/gpu_sim.dir
+/workspaces/CppGPUSimulator/build/CMakeFiles/edit_cache.dir
+/workspaces/CppGPUSimulator/build/CMakeFiles/rebuild_cache.dir
