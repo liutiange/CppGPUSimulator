@@ -32,24 +32,23 @@ CppGPUSimulator is a foundational project designed to simulate the core architec
 
 The project is organized to reflect a modular approach to hardware modeling:
 
-
-CppGPUSimulator/   
-├── src/   
-│   ├── arch/               # Architectural components (Instruction, Thread, Warp, ShaderCore)   
-│   │   ├── Instruction.h   # Defines the custom instruction set.   
-│   │   ├── Thread.h        # Represents a single GPU thread with registers and PC.   
-│   │   ├── Warp.h          # Groups threads and executes instructions in SIMD.   
-│   │   └── ShaderCore.h    # Manages warps, analogous to a Streaming Multiprocessor.   
-│   ├── memory/             # Memory system components   
-│   │   └── GPUMemory.h     # Simulates the GPU's global memory.   
-│   ├── sim/                # Overall simulation control and utilities   
-│   │   ├── GPUSimulator.h  # Orchestrates the entire GPU simulation.   
-│   │   └── Profiler.h      # Collects and reports simulation performance metrics.   
-│   └── main.cpp            # The main application entry point, defines and launches a kernel.   
-├── .gitignore              # Specifies intentionally untracked files to ignore by Git (e.g., build artifacts).   
-├── CMakeLists.txt          # CMake build configuration for the project.   
-├── README.md               # This file.   
-└── LICENSE                 # Project license.    
+<pre> CppGPUSimulator/ 
+  ├── src/ 
+  │ ├── arch/              # Architectural components (Instruction, Thread, Warp, ShaderCore) 
+  │ │ ├── Instruction.h    # Defines the custom instruction set. 
+  │ │ ├── Thread.h         # Represents a single GPU thread with registers and PC. 
+  │ │ ├── Warp.h           # Groups threads and executes instructions in SIMD. 
+  │ │ └── ShaderCore.h     # Manages warps, analogous to a Streaming Multiprocessor. 
+  │ ├── memory/            # Memory system components 
+  │ │ └── GPUMemory.h      # Simulates the GPU's global memory. 
+  │ ├── sim/               # Overall simulation control and utilities 
+  │ │ ├── GPUSimulator.h   # Orchestrates the entire GPU simulation. 
+  │ │ └── Profiler.h       # Collects and reports simulation performance metrics. 
+  │ └── main.cpp           # The main application entry point, defines and launches a kernel. 
+  ├── .gitignore           # Specifies intentionally untracked files to ignore by Git (e.g., build artifacts). 
+  ├── CMakeLists.txt       # CMake build configuration for the project. 
+  ├── README.md            # This file. 
+  └── LICENSE              # Project license. </pre>
 
 
 
