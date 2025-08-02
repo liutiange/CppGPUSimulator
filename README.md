@@ -25,25 +25,30 @@ CppGPUSimulator is a foundational project designed to simulate the core architec
 - **Functional Correctness**  
   Focuses on ensuring that the simulated instructions produce accurate results.
 
+- **Basic Performance Profiling**
+  Includes a built-in profiler to collect and report key simulation metrics such as kernel execution duration and memory operation counts (reads, writes, allocations, releases).
+
 ## Project Structure
 
 The project is organized to reflect a modular approach to hardware modeling:
 
-CppGPUSimulator/  
-├── src/  
-│   ├── arch/  
-│   │   ├── Instruction.h    # Defines the custom instruction set.  
-│   │   ├── Thread.h         # Represents a single GPU thread with registers and PC.  
-│   │   ├── Warp.h           # Groups threads and executes instructions in SIMD.  
-│   │   └── ShaderCore.h     # Manages warps, analogous to a Streaming Multiprocessor.  
-│   ├── memory/  
-│   │   └── GPUMemory.h      # Simulates the GPU's global memory.  
-│   ├── sim/  
-│   │   └── GPUSimulator.h   # Orchestrates the entire GPU simulation.  
-│   └── main.cpp             # The main application entry point, defines and launches a kernel.  
-├── CMakeLists.txt           # CMake build configuration for the project.  
-├── README.md                # This file.  
-└── LICENSE                  # Project license (MIT License).  
+
+CppGPUSimulator/
+├── src/
+│   ├── arch/               # Architectural components (Instruction, Thread, Warp, ShaderCore)
+│   │   ├── Instruction.h   # Defines the custom instruction set.
+│   │   ├── Thread.h        # Represents a single GPU thread with registers and PC.
+│   │   ├── Warp.h          # Groups threads and executes instructions in SIMD.
+│   │   └── ShaderCore.h    # Manages warps, analogous to a Streaming Multiprocessor.
+│   ├── memory/             # Memory system components
+│   │   └── GPUMemory.h     # Simulates the GPU's global memory.
+│   ├── sim/                # Overall simulation control and utilities
+│   │   ├── GPUSimulator.h  # Orchestrates the entire GPU simulation.
+│   │   └── Profiler.h      # Collects and reports simulation performance metrics.
+│   └── main.cpp            # The main application entry point, defines and launches a kernel.
+├── CMakeLists.txt          # CMake build configuration for the project.
+├── README.md               # This file.
+└── LICENSE                 # Project license.
 
 
 ## How to Build
@@ -97,8 +102,9 @@ The output will display:
 ## Example Output Snippet
 
 ```
-Starting CppGPUSimulator (Simplified Version) full system test...
+Starting CppGPUSimulator full system test with Profiler...
 GPUMemory initialized with 1024 units.
+Profiler initialized.
 GPUSimulator initialized with 2 ShaderCores.
 
 --- Preparing Global Memory with Input Data ---
@@ -112,27 +118,14 @@ GPUSimulator initialized with 2 ShaderCores.
   - HALT
 
 --- Launching Kernel ---
-  Grid Dimensions: (1, 1, 1)
-  Block Dimensions: (8, 1, 1)
-  Total Threads to launch: 8
-  Total Warps to launch: 2
-
-Executing warps on ShaderCore 0...
---- ShaderCore 0 Starting Warp Execution ---
-  ShaderCore 0 Cycle 0: Executing Warp 0 instruction: LOAD R0, Mem[0]
---- Warp 0 State (Current Instruction Index: 1) ---
-Thread 0 (PC=1) Registers: R0=10 R1=0 R2=0 R3=0 
-Thread 1 (PC=1) Registers: R0=20 R1=0 R2=0 R3=0 
-... (more execution cycles and Warp states) ...
-
---- ShaderCore 0 Finished Warp Execution in 4 cycles. Remaining active warps: 0 ---
-
-Executing warps on ShaderCore 1...
-... (similar execution trace for ShaderCore 1) ...
-
+  Grid Dimensions: (1,1,1), Block Dimensions: (8,1,1)
+  Total Threads to launch: 8, Total Warps to launch: 2
+Profiling started.
+... (detailed execution trace for ShaderCore 0 and 1) ...
 --- Kernel Launch Completed Successfully ---
 
 --- Final Global Memory State (Output Region) ---
+--- Global Memory Contents (200 to 208) ---
 Mem[200]: 12
 Mem[201]: 24
 Mem[202]: 36
@@ -143,32 +136,21 @@ Mem[206]: 84
 Mem[207]: 96
 ----------------------------------------------------
 
-CppGPUSimulator (Simplified Version) full system test finished.
+--- Profiling Summary ---
+Kernel Execution Summary:
+  - Kernel: SimpleAddKernel, Grid: (1,1,1), Block: (8,1,1), Duration: X.XXX ms (actual duration will vary)
+
+Memory Operations Summary (Total: Y):
+  Reads: Z (A bytes)
+  Writes: W (B bytes)
+  Allocates: C
+  Releases: D
+
+  Recent Memory Operations (up to 5):
+    - Type: write, Address: ..., Size: ... bytes, Time: ... ms
+    ...
+-------------------------
+
+CppGPUSimulator full system test finished.
 
 ```
-
-## Future Enhancements
-
-- **External Kernel Loading:**  
-  Implement a `KernelLoader` to load kernel programs from external assembly files (`.asm`), adding a `kernels/` directory.
-
-- **Performance Profiling:**  
-  Integrate a profiler to collect and report metrics like cycle counts, instruction counts, and memory access patterns.
-
-- **Comprehensive Unit Testing:**  
-  Add a `tests/` directory with a C++ unit testing framework (e.g., Google Test) to verify individual components.
-
-- **More Complex ISA:**  
-  Support additional instruction types (branches, logical operations, floating‑point arithmetic).
-
-- **Thread Divergence:**  
-  Simulate warp execution masks for control‑flow divergence (`if/else`).
-
-- **Memory Hierarchy:**  
-  Introduce caches (L1, L2) and shared memory with realistic latency models.
-
-- **Multiple ShaderCores:**  
-  Enhance the simulator to truly parallelize execution across multiple ShaderCores.
-
-- **Flexible I/O:**  
-  Implement flexible mechanisms to load input data and retrieve results.
